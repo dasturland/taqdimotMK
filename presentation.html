@@ -5,247 +5,567 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Internet kabellari (Optik tola) fizikasi — Taqdimot</title>
 <style>
-  /* ===== Font hierarchy (QAT'IY): Times New Roman; body=12pt, 16pt, 24pt, 32pt ===== */
+  /* =====================================================================
+     SHRIFT IERARXIYASI (QAT'IY):
+       Barcha matnlar — Times New Roman.
+       Eng kichik asosiy matn (body) = 12px.
+       Urg'u / ichki sarlavha        = 16px.
+       Kichik sarlavha (sub-title)   = 24px.
+       Sarlavha (H1)                 = 32px.
+       Yirik raqamlar / statistika   = 44px+ (sarlavhadan mutanosib katta).
+     ===================================================================== */
   :root {
-    --bg-deep:   #021226;
-    --bg-deep-2: #06243f;
-    --cyan:      #00E5FF;  /* optik tola nuri */
-    --blue:      #2F6BFF;  /* lazer */
-    --gold:      #FFD166;  /* foton */
-    --text:      #F2F6FB;
-    --text-dim:  #AEC4D6;
+    --bg-0:      #020b1a;   /* eng chuqur okean */
+    --bg-1:      #06162e;
+    --bg-2:      #0a2446;
+    --panel:     rgba(10, 32, 64, 0.55);
+    --panel-2:   rgba(6, 24, 48, 0.72);
+    --cyan:      #22e0ff;   /* optik tola nuri */
+    --cyan-soft: #7af0ff;
+    --blue:      #2f6bff;   /* lazer */
+    --violet:    #8b5cff;   /* DWDM spektri */
+    --gold:      #ffd166;   /* foton */
+    --green:     #4be3a0;
+    --text:      #eef5fc;
+    --text-dim:  #a9c2da;
+    --line:      rgba(34, 224, 255, 0.22);
     --font: "Times New Roman", Times, Georgia, serif;
 
-    --fs-body:   12pt;  /* eng kichik asosiy matn */
-    --fs-accent: 16pt;  /* ajratilgan so'z / ichki sarlavha */
-    --fs-sub:    24pt;  /* kichik sarlavha */
-    --fs-title:  32pt;  /* sarlavha */
+    --fs-body:   12px;
+    --fs-accent: 16px;
+    --fs-sub:    24px;
+    --fs-title:  32px;
+    --fs-mega:   44px;
   }
 
   * { box-sizing: border-box; }
+
+  html, body { margin: 0; padding: 0; }
   body {
-    margin: 0;
     font-family: var(--font);
     font-size: var(--fs-body);
     color: var(--text);
-    background: #000;
-    line-height: 1.5;
+    line-height: 1.6;
+    background:
+      radial-gradient(1200px 600px at 15% -10%, rgba(47,107,255,0.18), transparent 60%),
+      radial-gradient(1000px 700px at 100% 110%, rgba(34,224,255,0.12), transparent 55%),
+      linear-gradient(160deg, #01060f 0%, #030e20 100%);
+    padding: 32px 16px 64px;
   }
 
+  /* ---------- SLAYD ASOSI ---------- */
   .slide {
     position: relative;
     width: 100%;
     max-width: 1280px;
     min-height: 720px;
-    margin: 24px auto;
-    padding: 56px 64px 72px;
-    background: radial-gradient(120% 100% at 50% 0%, var(--bg-deep-2) 0%, var(--bg-deep) 70%);
-    border: 1px solid rgba(0,229,255,0.18);
-    border-radius: 10px;
+    margin: 28px auto;
+    padding: 54px 64px 76px;
+    background:
+      radial-gradient(130% 120% at 50% -10%, var(--bg-2) 0%, var(--bg-1) 48%, var(--bg-0) 100%);
+    border: 1px solid var(--line);
+    border-radius: 18px;
     overflow: hidden;
-    box-shadow: 0 0 40px rgba(0,229,255,0.08) inset;
+    box-shadow:
+      0 30px 80px rgba(0, 0, 0, 0.55),
+      0 0 0 1px rgba(255,255,255,0.02) inset,
+      0 1px 0 rgba(255,255,255,0.06) inset;
   }
-  /* takrorlanuvchi optik tola urg'u chizig'i (brend elementi) */
+  /* yuqori neon chekka */
+  .slide::before {
+    content: "";
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, transparent, var(--cyan) 20%, var(--blue) 50%, var(--violet) 80%, transparent);
+    box-shadow: 0 0 18px rgba(34,224,255,0.6);
+  }
+  /* pastki optik tola urg'u chizig'i (brend elementi) */
   .slide::after {
     content: "";
     position: absolute;
-    left: 0; right: 0; bottom: 40px;
+    left: 64px; right: 64px; bottom: 46px;
     height: 2px;
     background: linear-gradient(90deg, transparent, var(--cyan), transparent);
-    box-shadow: 0 0 12px var(--cyan);
-    opacity: 0.7;
+    box-shadow: 0 0 14px var(--cyan);
+    opacity: 0.65;
   }
+
   .footer {
     position: absolute;
-    bottom: 14px; left: 64px; right: 64px;
-    display: flex; justify-content: space-between;
+    bottom: 16px; left: 64px; right: 64px;
+    display: flex; justify-content: space-between; align-items: center;
     font-size: var(--fs-body);
     font-style: italic;
     color: var(--text-dim);
   }
+  .footer .tag {
+    font-style: normal;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--cyan);
+    font-size: var(--fs-body);
+  }
 
-  h1.title {           /* katta titul sarlavha */
+  /* ---------- TIPOGRAFIKA ---------- */
+  h1.title {
     font-size: var(--fs-title);
     font-weight: bold;
     margin: 0 0 16px;
-    color: var(--text);
+    letter-spacing: 0.3px;
+    line-height: 1.25;
   }
-  h1.slide-title {     /* slayd sarlavhasi */
+  h1.slide-title {
     font-size: var(--fs-title);
     font-weight: bold;
-    margin: 0 0 20px;
-    color: var(--text);
-    border-bottom: 2px solid rgba(0,229,255,0.35);
-    padding-bottom: 10px;
+    margin: 0 0 6px;
+    line-height: 1.25;
   }
-  .subtitle {          /* kichik sarlavha 24pt */
+  .title-rule {
+    width: 96px; height: 4px; border: none; margin: 0 0 20px;
+    background: linear-gradient(90deg, var(--cyan), var(--blue));
+    border-radius: 4px;
+    box-shadow: 0 0 14px rgba(34,224,255,0.55);
+  }
+  .subtitle {
     font-size: var(--fs-sub);
     font-weight: 600;
     font-style: italic;
     color: var(--text-dim);
-    margin: 0 0 24px;
+    margin: 0 0 18px;
+    line-height: 1.4;
   }
-  .accent {            /* ajratilgan so'z / ichki sarlavha 16pt */
+  .kicker {
+    display: inline-block;
     font-size: var(--fs-accent);
     font-weight: bold;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
     color: var(--cyan);
+    margin: 0 0 10px;
   }
-  .accent-gold { color: var(--gold); }
-  .inner-head {
-    font-size: var(--fs-accent);
-    font-weight: bold;
-    color: var(--cyan);
-    margin: 18px 0 8px;
-  }
-  p, li { font-size: var(--fs-body); }
-  ul, ol { margin: 8px 0 8px 22px; }
-  li { margin: 6px 0; }
+  .accent      { font-size: var(--fs-accent); font-weight: bold; color: var(--cyan); }
+  .accent-gold { color: var(--gold) !important; }
+  .accent-blue { color: var(--blue) !important; }
+  .inner-head  { font-size: var(--fs-accent); font-weight: bold; color: var(--cyan); margin: 16px 0 8px; }
+  p, li { font-size: var(--fs-body); margin: 8px 0; }
+  strong.hl { font-size: var(--fs-accent); color: var(--gold); font-weight: bold; }
+  strong.hl-cyan { font-size: var(--fs-accent); color: var(--cyan); font-weight: bold; }
+  ul, ol { margin: 8px 0 8px 20px; padding: 0; }
+  li { margin: 7px 0; }
   .label { font-size: var(--fs-accent); font-weight: bold; color: var(--gold); }
 
-  .design-note {
+  /* ---------- LAYOUT: GRID / FLEX ---------- */
+  .split {
+    display: grid;
+    grid-template-columns: 1.12fr 0.88fr;
+    gap: 36px;
+    align-items: start;
+  }
+  .split.media-left { grid-template-columns: 0.88fr 1.12fr; }
+  .split.media-left .media { order: -1; }
+
+  .figure {
+    position: relative;
+    border-radius: 14px;
+    overflow: hidden;
+    border: 1px solid var(--line);
+    box-shadow: 0 18px 44px rgba(0,0,0,0.5), 0 0 24px rgba(34,224,255,0.12);
+  }
+  .figure img {
+    display: block;
+    width: 100%;
+    height: 320px;
+    object-fit: cover;
+    filter: saturate(1.05) contrast(1.05);
+  }
+  /* rasm ustidagi ko'k tus — kiber uslub birligi uchun */
+  .figure::after {
+    content: "";
+    position: absolute; inset: 0;
+    background: linear-gradient(180deg, rgba(2,11,26,0.08) 0%, rgba(2,11,26,0.62) 100%),
+                linear-gradient(90deg, rgba(47,107,255,0.14), rgba(34,224,255,0.10));
+    pointer-events: none;
+  }
+  .figcap {
+    position: absolute;
+    left: 12px; bottom: 10px; right: 12px;
+    z-index: 2;
+    font-size: var(--fs-body);
+    font-style: italic;
+    color: var(--cyan-soft);
+    text-shadow: 0 1px 6px rgba(0,0,0,0.9);
+  }
+
+  /* kartalar */
+  .card {
+    background: var(--panel);
+    border: 1px solid var(--line);
+    border-radius: 14px;
+    padding: 16px 18px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.35), 0 0 0 1px rgba(255,255,255,0.02) inset;
+  }
+  .cards { display: grid; gap: 14px; }
+  .cards.c3 { grid-template-columns: repeat(3, 1fr); }
+  .card h3 { margin: 0 0 6px; font-size: var(--fs-accent); color: var(--cyan); }
+  .card.gold h3 { color: var(--gold); }
+  .card.blue h3 { color: var(--blue); }
+  .card p { margin: 0; }
+
+  /* statistik lavha */
+  .stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin: 16px 0 4px; }
+  .stat {
+    text-align: center;
+    background: var(--panel-2);
+    border: 1px solid var(--line);
+    border-radius: 14px;
+    padding: 14px 8px;
+  }
+  .stat .num { font-size: var(--fs-mega); font-weight: bold; color: var(--gold); display: block; line-height: 1.1; }
+  .stat .num.cyan { color: var(--cyan); }
+  .stat .num.green { color: var(--green); }
+  .stat .cap { font-size: var(--fs-body); color: var(--text-dim); }
+
+  /* reja ro'yxati */
+  .plan { list-style: none; margin: 8px 0 0; padding: 0; display: grid; gap: 14px; }
+  .plan li {
+    position: relative;
+    background: var(--panel);
+    border: 1px solid var(--line);
+    border-left: 4px solid var(--cyan);
+    border-radius: 12px;
+    padding: 14px 18px 14px 20px;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.3);
+  }
+  .plan li.gold { border-left-color: var(--gold); }
+  .plan .pn { font-size: var(--fs-accent); font-weight: bold; color: var(--cyan); }
+  .plan .pn.g { color: var(--gold); }
+  .plan .pd { font-size: var(--fs-body); color: var(--text); }
+  .plan .ps { font-size: var(--fs-body); font-style: italic; color: var(--text-dim); }
+
+  /* formula qutisi */
+  .formula {
+    display: inline-block;
+    font-size: var(--fs-accent);
+    color: var(--cyan-soft);
+    background: rgba(34,224,255,0.08);
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    padding: 8px 14px;
+    margin: 8px 0;
+    letter-spacing: 0.3px;
+  }
+
+  .note {
     font-size: var(--fs-body);
     font-style: italic;
     color: var(--text-dim);
     border-left: 3px solid var(--cyan);
+    background: rgba(34,224,255,0.05);
     padding: 8px 14px;
-    margin: 0 0 22px;
-    background: rgba(0,229,255,0.05);
+    border-radius: 0 8px 8px 0;
+    margin: 14px 0 0;
   }
+
   .center { text-align: center; }
-  .meta p { margin: 4px 0; }
-  .big-99 { font-size: var(--fs-sub); font-weight: bold; color: var(--gold); }
+
+  /* titul meta */
+  .meta { display: inline-block; text-align: left; margin: 14px auto 0; }
+  .meta p { margin: 6px 0; }
+
+  .brand-badge {
+    display: inline-flex; align-items: center; gap: 10px;
+    font-size: var(--fs-accent);
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--cyan);
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    padding: 7px 16px;
+    background: rgba(34,224,255,0.06);
+    margin-bottom: 22px;
+  }
+  .dot { width: 9px; height: 9px; border-radius: 50%; background: var(--cyan); box-shadow: 0 0 12px var(--cyan); }
+
+  /* titul rasm bandi (keng) */
+  .hero-figure img { height: 260px; }
 
   @media print {
-    body { background: #fff; }
-    .slide { break-after: page; margin: 0 auto; border-radius: 0; }
+    body { background: #fff; padding: 0; }
+    .slide {
+      break-after: page;
+      margin: 0 auto;
+      border-radius: 0;
+      box-shadow: none;
+      min-height: 95vh;
+    }
+    .slide::before, .slide::after { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
   }
 </style>
 </head>
 <body>
 
-<!-- SLAYD 1 -->
+<!-- ====================== SLAYD 1 — TITUL ====================== -->
 <section class="slide">
-  <p class="design-note">Dizayn: Fon — okean tubidan o'tgan yorqin optik kabel va jahon xaritasi. Matnlar Times New Roman, yirik va aniq o'qiladigan shriftda.</p>
-  <h1 class="title center">Internet kabellari (Optik tola) <span class="accent" style="font-size:var(--fs-title)">fizikasi</span></h1>
-  <p class="subtitle center">Qit'alarni bog'lovchi suv osti kabellarida ma'lumotlarni yorug'lik tezligida uzatish texnologiyalari.</p>
-  <div class="meta center">
-    <p><span class="label">Universitet:</span> Jizzax davlat pedagogika universiteti tabiiy fanlar oliy maktabi</p>
-    <p><span class="label">Fan:</span> Axborot tizimlari</p>
-    <p><span class="label">Guruh:</span> 242_26</p>
-    <p><span class="label">Talaba:</span> Toshboʻriyeva Marjona</p>
+  <div class="center">
+    <span class="brand-badge"><span class="dot"></span> Axborot tizimlari · Ilmiy taqdimot</span>
+    <h1 class="title">Internet kabellari (Optik tola) <span class="accent" style="font-size:var(--fs-title)">fizikasi</span></h1>
+    <p class="subtitle">Qit'alarni bog'lovchi suv osti kabellarida ma'lumotlarni yorug'lik tezligida uzatish texnologiyalari</p>
   </div>
-  <div class="footer"><span>Internet kabellari (Optik tola) fizikasi</span><span>Slayd 1 / 10</span></div>
+
+  <div class="figure hero-figure" style="margin:6px auto 18px; max-width:900px;">
+    <img src="https://source.unsplash.com/1280x720/?fiber,optic,cable,network" alt="Optik tola kabellari va yorug'lik oqimi">
+    <div class="figcap">Optik tola to'plami — fotonlar oqimi shisha yadrolar bo'ylab harakatlanmoqda.</div>
+  </div>
+
+  <div class="center">
+    <div class="meta">
+      <p><span class="label">Universitet:</span> Jizzax davlat pedagogika universiteti tabiiy fanlar oliy maktabi</p>
+      <p><span class="label">Fan:</span> Axborot tizimlari</p>
+      <p><span class="label">Talaba:</span> Toshboʻriyeva Marjona (242_26 - guruh)</p>
+    </div>
+  </div>
+
+  <div class="footer"><span class="tag">Optik tola fizikasi</span><span>Slayd 1 / 10</span></div>
 </section>
 
-<!-- SLAYD 2 -->
+<!-- ====================== SLAYD 2 — REJA ====================== -->
 <section class="slide">
-  <p class="design-note">Dizayn: Shisha tolalarning ichki tuzilishi aks etgan xira fonda, toza va tartibli ro'yxat ko'rinishida.</p>
+  <span class="kicker">Mundarija</span>
   <h1 class="slide-title">Taqdimot rejasi</h1>
-  <ol>
-    <li><span class="accent">1-reja.</span> Optik tola nima va u axborotni qanday o'qiydi?</li>
-    <li><span class="accent">2-reja.</span> Yorug'likning to'liq ichki qaytish fizikasi va kabel qatlamlari.</li>
-    <li><span class="accent">3-reja.</span> Qit'alararo suv osti kabellari (Global axborot tizimining asosi).</li>
-    <li><span class="accent accent-gold">Xulosa.</span> Optik tolaning axborot texnologiyalari kelajagidagi o'rni.</li>
-  </ol>
-  <div class="footer"><span>Taqdimot rejasi</span><span>Slayd 2 / 10</span></div>
-</section>
+  <hr class="title-rule">
 
-<!-- SLAYD 3 -->
-<section class="slide">
-  <p class="design-note">Dizayn: Kompyuterdagi 1 va 0 raqamlari lazer nurlariga aylanayotgani tasvirlangan vizual sxema.</p>
-  <h1 class="slide-title">Optik tola <span class="subtitle" style="display:inline">(Fiber Optic)</span> nima?</h1>
-  <p>Optik tola — bu ma'lumotlarni elektr toki orqali emas, balki <span class="accent accent-gold">yorug'lik zarrachalari (fotonlar)</span> yordamida uzatuvchi o'ta ingichka shisha yoki plastik toladir.</p>
-  <p class="inner-head">Axborot tizimlarida u qanday ishlaydi?</p>
-  <ul>
-    <li>Kompyuterdagi raqamli ma'lumotlar (1 va 0) maxsus lazer yoki LED lampalar yordamida yorug'lik impulslariga (miltillashlarga) aylanadi.</li>
-    <li>Bu yorug'lik miltillashlari shisha tola orqali soniyasiga yuz minglab kilometr tezlikda manzilga yetkaziladi va qabul qiluvchi qurilma uni yana raqamli ma'lumotga aylantiradi.</li>
-  </ul>
-  <div class="footer"><span>1-reja · Optik tola nima?</span><span>Slayd 3 / 10</span></div>
-</section>
-
-<!-- SLAYD 4 -->
-<section class="slide">
-  <p class="design-note">Dizayn: Optik tola kabelining ichki kesimi chizmasi (Yadro, qobiq, himoya qatlami ko'rsatilgan holda).</p>
-  <h1 class="slide-title">Optik kabelning ichki tuzilishi</h1>
-  <p>Bitta optik kabel o'nlab, ba'zan yuzlab inson sochidan ham ingichka tolalardan iborat. Har bir tola 3 asosiy qismdan tashkil topadi:</p>
-  <ol>
-    <li><span class="accent-gold label">Yadro (Core):</span> Yorug'lik harakatlanadigan eng markaziy shisha qism.</li>
-    <li><span class="label" style="color:var(--cyan)">Qobiq (Cladding):</span> Yadroni o'rab turadigan, yorug'likni tashqariga chiqarmay, ichkariga qaytaruvchi maxsus oyna qatlami.</li>
-    <li><span class="label" style="color:var(--text-dim)">Himoya qatlami (Buffer/Jacket):</span> Shishani namlik va fizik shikastlanishdan asrovchi plastik qobiq.</li>
-  </ol>
-  <div class="footer"><span>1-reja · Ichki tuzilish</span><span>Slayd 4 / 10</span></div>
-</section>
-
-<!-- SLAYD 5 -->
-<section class="slide">
-  <p class="design-note">Dizayn: Yorug'lik nurining kabel ichida zig-zag shaklida qaytib harakatlanishi ko'rsatilgan fizik diagramma.</p>
-  <h1 class="slide-title">Yorug'likning to'liq ichki qaytish fizikasi</h1>
-  <p class="inner-head">Nima uchun yorug'lik shisha quvur ichidan chiqib ketmaydi yoki so'nib qolmaydi?</p>
-  <p>Bu fizikaning <span class="accent accent-gold">"Yorug'likning to'liq ichki qaytishi" (Total Internal Reflection)</span> qonuniyatiga asoslangan.</p>
-  <ul>
-    <li>Yadro va qobiq har xil optik zichlikka ega materialdan yasaladi.</li>
-    <li>Lazer nuri tolaga ma'lum bir burchak ostida yo'naltirilganda, u qobiqdan huddi ko'zgudan qaytgandek orqaga qaytadi. Natijada yorug'lik kabel qanchalik egri bo'lmasin, tashqariga chiqib ketmasdan, tola bo'ylab minglab kilometrlarga sayohat qiladi.</li>
-  </ul>
-  <div class="footer"><span>2-reja · To'liq ichki qaytish</span><span>Slayd 5 / 10</span></div>
-</section>
-
-<!-- SLAYD 6 -->
-<section class="slide">
-  <p class="design-note">Dizayn: Elektr kabellari (Mis) va Optik kabellarni tezlik va o'tkazuvchanlik bo'yicha solishtiruvchi diagramma.</p>
-  <h1 class="slide-title">Nega aynan yorug'lik? <span class="subtitle" style="display:inline">(Optik tolaning afzalliklari)</span></h1>
-  <p>Eski turdagi mis kabellar elektr toki orqali ishlaydi. Optik tola esa yorug'lik asosida ishlaydi va fizika nuqtai nazaridan ulkan ustunliklarga ega:</p>
-  <ul>
-    <li><span class="label">Tezlik:</span> Yorug'lik koinotdagi eng tez harakatlanuvchi obyektdir (bo'shliqda ~300 000 km/s, shishada ~200 000 km/s).</li>
-    <li><span class="label" style="color:var(--cyan)">O'tkazuvchanlik imkoniyati:</span> Bitta optik tola bir vaqtning o'zida millionlab videoqo'ng'iroqlarni va Terabaytlab axborotni uzata oladi.</li>
-    <li><span class="label" style="color:var(--blue)">Xavfsizlik:</span> Yorug'lik elektromagnit maydon yaratmaydi, shuning uchun tashqi signallar xalaqit bermaydi va ma'lumotni o'g'irlash imkonsiz.</li>
-  </ul>
-  <div class="footer"><span>2-reja · Afzalliklar</span><span>Slayd 6 / 10</span></div>
-</section>
-
-<!-- SLAYD 7 -->
-<section class="slide">
-  <p class="design-note">Dizayn: Jahon xaritasida qit'alarni bog'lovchi dengiz osti internet kabellarining xaritasi (TeleGeography xaritasi stili).</p>
-  <h1 class="slide-title">Global axborot tizimi: Suv osti kabellari</h1>
-  <p>Ko'pchilik internetni kosmosdan (sun'iy yo'ldoshlardan) keladi deb o'ylaydi, ammo global internet trafikning <span class="big-99">99%</span> qismi qit'alarni bog'lovchi suv osti (okean osti) optik kabellari orqali o'tadi.</p>
-  <ul>
-    <li>Bugungi kunda dunyo bo'ylab millionlab kilometr suv osti kabellari tortilgan.</li>
-    <li>Aynan shu kabellar orqali O'zbekistondagi foydalanuvchi AQShdagi serverlardan (masalan, Google, YouTube, Kimi AI) ma'lumotlarni millisekundlar ichida qabul qiladi.</li>
-  </ul>
-  <div class="footer"><span>3-reja · Suv osti kabellari</span><span>Slayd 7 / 10</span></div>
-</section>
-
-<!-- SLAYD 8 -->
-<section class="slide">
-  <p class="design-note">Dizayn: Maxsus kema okean tubiga yo'g'on optik kabel yotqizayotganini ko'rsatuvchi sxema yoki rasm.</p>
-  <h1 class="slide-title">Suv osti kabellari qanday yotqiziladi?</h1>
-  <p>Okean tubidagi bosim o'ta yuqori bo'lgani uchun, bu kabellar juda qalin himoya qatlamlariga <span class="accent">(po'lat simlar, neft bilan ishlangan qoplamalar va mis quvurlar)</span> o'raladi.</p>
-  <ul>
-    <li>Maxsus ulkan kemalar oylab okean bo'ylab harakatlanib, kabellarni maxsus robotlar yordamida dengiz tubiga ko'mib chiqadi.</li>
-    <li>Sharklar tishlashi yoki kema langarlari uzib yubormasligi uchun kabellar metall zirhlar bilan mustahkamlanadi. Bu butun dunyo axborot tizimlari uzluksizligini ta'minlaydi.</li>
-  </ul>
-  <div class="footer"><span>3-reja · Yotqizish texnologiyasi</span><span>Slayd 8 / 10</span></div>
-</section>
-
-<!-- SLAYD 9 -->
-<section class="slide">
-  <p class="design-note">Dizayn: Yer shari va uni o'rab turgan yorug'lik tarmoqlari aks etgan global innovatsion fon.</p>
-  <h1 class="slide-title">Xulosa</h1>
-  <p>Xulosa o'rnida shuni ta'kidlash kerakki, axborot tizimlarining bugungi rivoji to'g'ridan-to'g'ri optik tola va yorug'lik fizikasiga bog'liq.</p>
-  <p>Biz foydalanayotgan har bir mobil ilova, har bir veb-sayt va JDPU ning elektron tizimlari o'z ma'lumotlarini qit'alar osha yorug'lik tezligida uzatuvchi, okeanlar tubida yotgan ushbu texnologik mo'jiza — optik kabellar orqali amalga oshiradi. Ular haqiqiy ma'noda <span class="accent accent-gold">zamonaviy dunyomizning qon tomirlaridir.</span></p>
-  <div class="footer"><span>Xulosa</span><span>Slayd 9 / 10</span></div>
-</section>
-
-<!-- SLAYD 10 -->
-<section class="slide">
-  <p class="design-note">Dizayn: Rasmiy, toza va estetik fon, universitet uslubida.</p>
-  <h1 class="title center" style="color:var(--cyan); margin-top:120px;">E'tiboringiz uchun rahmat!</h1>
-  <div class="meta center">
-    <p><span class="label">Mavzu:</span> Internet kabellari (Optik tola) fizikasi</p>
-    <p><span class="label">Taqdimotchi:</span> Toshboʻriyeva Marjona (242_26 - guruh)</p>
-    <p>Jizzax davlat pedagogika universiteti</p>
-    <p>Tabiiy fanlar oliy maktabi - Axborot tizimlari fani.</p>
+  <div class="split media-left">
+    <div class="media">
+      <div class="figure">
+        <img src="https://source.unsplash.com/1280x720/?fiber,optic,glass,strands" alt="Shisha optik tolalarning makro ko'rinishi">
+        <div class="figcap">Inson sochidan ingichka shisha tolalar makro ko'rinishda.</div>
+      </div>
+    </div>
+    <div>
+      <ol class="plan">
+        <li>
+          <div><span class="pn">1-reja.</span> <span class="pd">Optik tola nima va u axborotni qanday "o'qiydi"?</span></div>
+          <div class="ps">Fotonlar, modulyatsiya va tolaning ichki tuzilishi (Slayd 3–4).</div>
+        </li>
+        <li>
+          <div><span class="pn">2-reja.</span> <span class="pd">Yorug'likning to'liq ichki qaytish fizikasi va afzalliklari.</span></div>
+          <div class="ps">Snell qonuni, kritik burchak, so'nish (dB/km), DWDM (Slayd 5–6).</div>
+        </li>
+        <li>
+          <div><span class="pn">3-reja.</span> <span class="pd">Qit'alararo suv osti kabellari — global tizim asosi.</span></div>
+          <div class="ps">Okean osti infratuzilmasi va yotqizish texnologiyasi (Slayd 7–8).</div>
+        </li>
+        <li class="gold">
+          <div><span class="pn g">Xulosa.</span> <span class="pd">Optik tolaning axborot texnologiyalari kelajagidagi o'rni.</span></div>
+          <div class="ps">Umumlashtirish va "E'tiboringiz uchun rahmat" (Slayd 9–10).</div>
+        </li>
+      </ol>
+    </div>
   </div>
-  <div class="footer"><span>E'tiboringiz uchun rahmat</span><span>Slayd 10 / 10</span></div>
+
+  <div class="footer"><span class="tag">Mundarija</span><span>Slayd 2 / 10</span></div>
+</section>
+
+<!-- ====================== SLAYD 3 — 1-REJA ====================== -->
+<section class="slide">
+  <span class="kicker">1-reja · Asoslar</span>
+  <h1 class="slide-title">Optik tola (Fiber Optic) nima?</h1>
+  <hr class="title-rule">
+
+  <div class="split">
+    <div>
+      <p>Optik tola — bu axborotni elektr toki emas, balki <strong class="hl">yorug'lik zarrachalari (fotonlar)</strong> yordamida uzatuvchi, diametri atigi 8–125 mikrometr bo'lgan o'ta toza shisha (silika, SiO₂) yoki plastik toladir. Bugungi magistral tarmoqlarda yadro diametri bir modali (single-mode) tolalarda taxminan <strong class="hl-cyan">9 µm</strong>ni tashkil etadi, bu esa inson sochidan ham ingichka demakdir.</p>
+      <p class="inner-head">Axborot qanday "yoziladi" va "o'qiladi"?</p>
+      <ul>
+        <li>Kompyuterdagi raqamli ma'lumotlar (ikkilik <strong class="hl-cyan">1</strong> va <strong class="hl-cyan">0</strong> ketma-ketligi) yarimo'tkazgichli lazer yoki LED yordamida yorug'lik impulslariga aylantiriladi — bu jarayon <em>modulyatsiya</em> deyiladi: nur yoqilsa "1", o'chirilsa "0".</li>
+        <li>Zamonaviy tizimlarda to'lqin uzunligi ko'pincha <strong class="hl-cyan">1310 nm</strong> va <strong class="hl-cyan">1550 nm</strong> infraqizil diapazonda tanlanadi, chunki aynan shu oynalarda shishadagi yo'qotishlar eng kichik bo'ladi.</li>
+        <li>Qabul qiluvchi tarafda fotodiod yorug'lik impulslarini yana elektr signaliga, so'ngra raqamli ma'lumotga aylantiradi — shu tarzda bitta tola soniyasiga milliardlab bit uzatadi.</li>
+      </ul>
+      <p class="note">Tola nafaqat "simi", balki optik to'lqin yo'riqchisidir (waveguide): u yorug'likni egilishlarda ham ushlab, manzilgacha olib boradi.</p>
+    </div>
+    <div class="figure">
+      <img src="https://source.unsplash.com/1280x720/?laser,light,technology,data" alt="Lazer nuri va raqamli ma'lumot impulslari">
+      <div class="figcap">Lazer impulslari 1/0 ketma-ketligini yorug'likka aylantiradi.</div>
+    </div>
+  </div>
+
+  <div class="footer"><span class="tag">1-reja · Optik tola nima</span><span>Slayd 3 / 10</span></div>
+</section>
+
+<!-- ====================== SLAYD 4 — 1-REJA ====================== -->
+<section class="slide">
+  <span class="kicker">1-reja · Tuzilish</span>
+  <h1 class="slide-title">Optik kabelning ichki tuzilishi</h1>
+  <hr class="title-rule">
+
+  <div class="split media-left">
+    <div class="media">
+      <div class="figure">
+        <img src="https://source.unsplash.com/1280x720/?fiber,optic,wire,cross-section" alt="Optik kabelning ichki qatlamlari">
+        <div class="figcap">Yadro, qobiq va himoya qatlamlaridan iborat kabel kesimi.</div>
+      </div>
+    </div>
+    <div>
+      <p>Bitta optik kabel o'nlab, ba'zan <strong class="hl">yuzlab (hozirgi rekordlarda 6 000+)</strong> alohida tolalarni birlashtiradi. Har bir tolaning ishlashi uning uch asosiy qatlamidagi <em>sindirish ko'rsatkichi (n)</em> farqiga asoslanadi:</p>
+      <ol>
+        <li><span class="label">Yadro (Core):</span> yorug'lik tarqaladigan markaziy shisha; sindirish ko'rsatkichi yuqoriroq (n₁ ≈ 1,468). Aynan shu qatlamda foton oqimi yashaydi.</li>
+        <li><span class="label" style="color:var(--cyan)">Qobiq (Cladding):</span> yadroni o'rab turuvchi, biroz pastroq sindirish ko'rsatkichli (n₂ ≈ 1,462) shisha. n₁ &gt; n₂ sharti to'liq ichki qaytishni ta'minlaydi va nurni yadro ichida ushlab turadi.</li>
+        <li><span class="label" style="color:var(--text-dim)">Himoya qatlami (Coating / Buffer / Jacket):</span> akrilat qoplama, kuchlantiruvchi aramid (Kevlar) iplari va tashqi plastik g'ilof — namlik, egilish va mexanik shikastdan asraydi.</li>
+      </ol>
+      <div class="formula">n₁ &gt; n₂ · Sonli apertura NA = √(n₁² − n₂²)</div>
+      <p class="note">Yadro va qobiq o'rtasidagi atigi ~1% sindirish ko'rsatkichi farqi butun texnologiyaning fizik poydevoridir.</p>
+    </div>
+  </div>
+
+  <div class="footer"><span class="tag">1-reja · Ichki tuzilish</span><span>Slayd 4 / 10</span></div>
+</section>
+
+<!-- ====================== SLAYD 5 — 2-REJA ====================== -->
+<section class="slide">
+  <span class="kicker">2-reja · Fizika</span>
+  <h1 class="slide-title">Yorug'likning to'liq ichki qaytish fizikasi</h1>
+  <hr class="title-rule">
+
+  <div class="split">
+    <div>
+      <p>Yorug'lik shisha quvurdan "sizib" chiqmasligining siri — optikaning <strong class="hl">to'liq ichki qaytish (Total Internal Reflection, TIR)</strong> hodisasidadir. Nur zichroq muhitdan (yadro) siyrakroq muhitga (qobiq) o'tishda <em>Snell qonuni</em> (n₁·sin θ₁ = n₂·sin θ₂) bo'yicha sinadi.</p>
+      <p>Tushish burchagi ma'lum bir <strong class="hl-cyan">kritik burchak θc</strong> dan oshsa, nur umuman qobiqqa o'tmaydi, balki ko'zgudan qaytgandek 100% yadroga qaytadi. Shuning uchun kabel egilsa ham, foton oqimi ichkarida qamalib, minglab kilometr yo'l bosadi.</p>
+      <div class="formula">θc = arcsin (n₂ / n₁) ≈ 83° (shisha uchun)</div>
+      <ul>
+        <li>Nurning so'nishi (attenuatsiya) juda kam: zamonaviy tolalarda atigi <strong class="hl-cyan">~0,2 dB/km</strong> (1550 nm da) — ya'ni signal 100 km dan keyin ham o'qiladi.</li>
+        <li>Uzoq masofalarda signalni tiklash uchun har ~80–100 km da <em>EDFA (erbiy legirlangan tola kuchaytirgichi)</em> ishlatiladi.</li>
+      </ul>
+    </div>
+    <div class="figure">
+      <img src="https://source.unsplash.com/1280x720/?light,reflection,beam,physics" alt="Yorug'lik nurining qaytishi">
+      <div class="figcap">Nur yadro-qobiq chegarasidan zig-zag bo'lib to'liq qaytadi.</div>
+    </div>
+  </div>
+
+  <div class="footer"><span class="tag">2-reja · To'liq ichki qaytish</span><span>Slayd 5 / 10</span></div>
+</section>
+
+<!-- ====================== SLAYD 6 — 2-REJA ====================== -->
+<section class="slide">
+  <span class="kicker">2-reja · Afzalliklar</span>
+  <h1 class="slide-title">Nega aynan yorug'lik? <span class="subtitle" style="display:inline">(mis vs optik tola)</span></h1>
+  <hr class="title-rule">
+
+  <div class="split" style="grid-template-columns: 1.1fr 0.9fr; margin-bottom:14px;">
+    <p style="align-self:center;">Eski mis kabellar axborotni elektr signali orqali uzatadi va qarshilik, qizish hamda elektromagnit xalaqitdan aziyat chekadi. Optik tola esa yorug'lik asosida ishlaydi va fizik jihatdan bir necha ustunlikka ega. Yorug'lik vakuumda <strong class="hl-cyan">~299 792 km/s</strong>, shisha ichida esa (n≈1,47 tufayli) <strong class="hl">~200 000 km/s</strong> tezlikda tarqaladi — bu kechikishni (latensiyani) minimallashtiradi.</p>
+    <div class="figure" style="align-self:center;">
+      <img src="https://source.unsplash.com/1280x720/?copper,wire,fiber,comparison" alt="Mis va optik kabellarni taqqoslash" style="height:180px;">
+      <div class="figcap">Mis o'tkazgich va optik tola — ikki avlod texnologiyasi.</div>
+    </div>
+  </div>
+
+  <div class="stats">
+    <div class="stat"><span class="num cyan">~200 000</span><span class="cap">km/s — shishadagi yorug'lik tezligi</span></div>
+    <div class="stat"><span class="num">0,2 dB/km</span><span class="cap">eng kam so'nish (1550 nm)</span></div>
+    <div class="stat"><span class="num green">&gt;100 Tbit/s</span><span class="cap">bitta tolaning hozirgi sig'imi</span></div>
+  </div>
+
+  <div class="cards c3" style="margin-top:14px;">
+    <div class="card"><h3>Katta sig'im (DWDM)</h3><p>Spektral zichlashtirish texnologiyasi bitta tolada <strong class="hl-cyan">80–160+</strong> turli to'lqin uzunligini (rangni) parallel uzatadi — millionlab videoqo'ng'iroq bir vaqtda sig'adi.</p></div>
+    <div class="card blue"><h3>Past yo'qotish, uzoq masofa</h3><p>Mis kabel har bir necha yuz metrda zaiflashadi; optik signal esa kuchaytirgichsiz <strong class="hl-cyan">70–100 km</strong> ga yetadi.</p></div>
+    <div class="card gold"><h3>Xavfsizlik va halolik</h3><p>Yorug'lik elektromagnit maydon yaratmaydi: tashqi xalaqit ta'sir qilmaydi, signalni sezdirmay ushlab olish deyarli imkonsiz.</p></div>
+  </div>
+
+  <div class="footer"><span class="tag">2-reja · Afzalliklar</span><span>Slayd 6 / 10</span></div>
+</section>
+
+<!-- ====================== SLAYD 7 — 3-REJA ====================== -->
+<section class="slide">
+  <span class="kicker">3-reja · Global tizim</span>
+  <h1 class="slide-title">Global axborot tizimi: suv osti kabellari</h1>
+  <hr class="title-rule">
+
+  <div class="split">
+    <div>
+      <p>Ko'pchilik internet kosmosdan — sun'iy yo'ldoshlardan keladi deb o'ylaydi, ammo aslida qit'alararo internet trafigining taxminan <strong class="hl">99%</strong> qismi okean tubida yotgan optik kabellar orqali o'tadi. Sun'iy yo'ldosh aloqasi sig'im va kechikish bo'yicha ularga teng kela olmaydi.</p>
+      <ul>
+        <li>Hozirda dunyo bo'ylab <strong class="hl-cyan">500 dan ortiq</strong> suv osti kabel tizimi mavjud bo'lib, ularning umumiy uzunligi <strong class="hl-cyan">1,4 million km</strong> dan oshadi — bu Yer atrofini 30 martadan ko'proq o'rab chiqishga teng.</li>
+        <li>Aynan shu kabellar orqali O'zbekistondagi foydalanuvchi AQSh yoki Yevropadagi serverlardan (Google, YouTube, bulutli xizmatlar) ma'lumotni <strong class="hl">o'nlab millisekund</strong> ichida oladi.</li>
+        <li>Masalan, Atlantika okeani ostidagi zamonaviy "MAREA" kabeli <strong class="hl-cyan">~200 Tbit/s</strong> sig'imga ega va AQSh bilan Yevropani bevosita bog'laydi.</li>
+      </ul>
+    </div>
+    <div class="figure">
+      <img src="https://source.unsplash.com/1280x720/?world,map,network,connection" alt="Qit'alarni bog'lovchi global tarmoq xaritasi">
+      <div class="figcap">Qit'alarni bog'lovchi suv osti kabellari xaritasi (sxematik).</div>
+    </div>
+  </div>
+
+  <div class="footer"><span class="tag">3-reja · Suv osti kabellari</span><span>Slayd 7 / 10</span></div>
+</section>
+
+<!-- ====================== SLAYD 8 — 3-REJA ====================== -->
+<section class="slide">
+  <span class="kicker">3-reja · Infratuzilma</span>
+  <h1 class="slide-title">Suv osti kabellari qanday yotqiziladi?</h1>
+  <hr class="title-rule">
+
+  <div class="split media-left">
+    <div class="media">
+      <div class="figure">
+        <img src="https://source.unsplash.com/1280x720/?ship,ocean,deep,sea" alt="Okeanda kabel yotqizuvchi kema">
+        <div class="figcap">Maxsus kabel yotqizuvchi kema okean bo'ylab yurib kabel tortadi.</div>
+      </div>
+    </div>
+    <div>
+      <p>Okean tubida bosim 10–11 km chuqurlikda <strong class="hl">1 000 atmosferadan</strong> oshishi mumkin, shuning uchun kabellar ko'p qatlamli himoyaga o'raladi: markazdagi nozik tolalar po'lat simlar, mis o'tkazgich (quruqlikdagi kuchaytirgichlarni oziqlantirish uchun), polietilen va bitum qoplamalar bilan mustahkamlanadi.</p>
+      <ul>
+        <li>Maxsus <em>kabel yotqizuvchi kemalar</em> (cable-laying ships) oylab suzib, kabelni soatiga bir necha chaqirim tezlikda okean tubiga yotqizadi.</li>
+        <li>Sayoz zonalarda kabel akula tishlashi va kema langarlaridan himoyalanish uchun suv osti plug va robotlar yordamida <strong class="hl-cyan">1–3 metr</strong> chuqurlikka ko'miladi.</li>
+        <li>Shikastlanish yuz berganda remont kemasi uzilgan uchlarni maxsus ilgaklar bilan ko'tarib, dengizda qayta ulaydi — tiklash bir necha hafta davom etishi mumkin.</li>
+      </ul>
+      <p class="note">Butun global axborot tizimining uzluksizligi aynan shu ko'rinmas okean osti infratuzilmasiga tayanadi.</p>
+    </div>
+  </div>
+
+  <div class="footer"><span class="tag">3-reja · Yotqizish texnologiyasi</span><span>Slayd 8 / 10</span></div>
+</section>
+
+<!-- ====================== SLAYD 9 — XULOSA ====================== -->
+<section class="slide">
+  <span class="kicker">Xulosa</span>
+  <h1 class="slide-title">Xulosa: yorug'lik tezligidagi dunyo</h1>
+  <hr class="title-rule">
+
+  <div class="split">
+    <div>
+      <p>Taqdimotni umumlashtirsak, zamonaviy axborot tizimlarining butun qudrati bevosita optik tola va yorug'lik fizikasiga — to'liq ichki qaytish, past so'nish va spektral zichlashtirishga tayanadi. Oddiy fizik qonuniyat global miqyosdagi raqamli inqilobni mumkin qildi.</p>
+      <p>Biz foydalanayotgan har bir mobil ilova, veb-sayt, bulut xizmati va universitetning elektron tizimlari o'z ma'lumotlarini qit'alar osha yorug'lik tezligida uzatuvchi, okeanlar tubida yotgan ushbu texnologik mo'jiza orqali almashadi. Optik kabellar haqiqiy ma'noda <strong class="hl">zamonaviy raqamli dunyomizning qon tomirlaridir</strong>.</p>
+      <p>Kelajakda ko'p yadroli (multi-core) va bo'shliqli (hollow-core) tolalar, kogerent modulyatsiya va kvant shifrlash yo'nalishlari ushbu tomirlarni yanada tezroq, ishonchliroq va xavfsizroq qiladi.</p>
+    </div>
+    <div class="figure">
+      <img src="https://source.unsplash.com/1280x720/?earth,global,network,technology" alt="Yorug'lik tarmog'i bilan o'ralgan Yer shari">
+      <div class="figcap">Optik tarmoqlar bilan o'ralgan global raqamli infratuzilma.</div>
+    </div>
+  </div>
+
+  <div class="footer"><span class="tag">Xulosa</span><span>Slayd 9 / 10</span></div>
+</section>
+
+<!-- ====================== SLAYD 10 — RAHMAT ====================== -->
+<section class="slide">
+  <div class="figure hero-figure" style="margin:30px auto 22px; max-width:860px;">
+    <img src="https://source.unsplash.com/1280x720/?fiber,optic,blue,abstract" alt="Optik tola abstrakt neon fon">
+    <div class="figcap">Fotonlar oqimi — raqamli dunyoning yorug'lik tilidagi hikoyasi.</div>
+  </div>
+
+  <h1 class="title center" style="color:var(--cyan); font-size:var(--fs-mega); margin-top:4px;">E'tiboringiz uchun rahmat!</h1>
+
+  <div class="center">
+    <div class="meta">
+      <p><span class="label">Mavzu:</span> Internet kabellari (Optik tola) fizikasi</p>
+      <p><span class="label">Talaba:</span> Toshboʻriyeva Marjona (242_26 - guruh)</p>
+      <p><span class="label">Fan:</span> Axborot tizimlari</p>
+      <p>Jizzax davlat pedagogika universiteti tabiiy fanlar oliy maktabi</p>
+    </div>
+  </div>
+
+  <div class="footer"><span class="tag">E'tiboringiz uchun rahmat</span><span>Slayd 10 / 10</span></div>
 </section>
 
 </body>
