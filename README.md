@@ -11,8 +11,20 @@ Axborot tizimlari fani uchun **aniq 10 ta slayddan** iborat, chuqur ilmiy-texnik
 
 | Fayl | Tavsif |
 |------|--------|
+| [`taqdimot.pptx`](taqdimot.pptx) | **PowerPoint taqdimot (.pptx).** 10 slayd, har birida embed qilingan (ichiga joylangan) o'ziga xos rasm. Times New Roman shrifti, to'q ko'k + neon dizayn. PowerPoint, LibreOffice Impress yoki Google Slides'da ochiladi. |
 | [`presentation.html`](presentation.html) | **Flagman artefakt.** O'z-o'zidan yetarli (self-contained) HTML/CSS: "Apple/Microsoft keynote" uslubidagi to'q ko'k + neon dizayn, grid/flexbox tuzilma, yumaloq kartalar, box-shadow va gradientlar. Times New Roman + qat'iy o'lcham ierarxiyasi. Brauzerda mustaqil ochiladi; Print → PDF da har bir slayd alohida sahifa. |
 | [`PRESENTATION.md`](PRESENTATION.md) | 10 slaydning to'liq (chuqurlashtirilgan) Uzbek matni, embed qilingan Unsplash rasmlari, har bir slayd uchun dizayn ko'rsatmasi va shrift/o'lcham hujjati. |
+| [`build_pptx.py`](build_pptx.py) | `.pptx` faylini qayta yaratuvchi skript (toza Python standart kutubxonasi — tashqi kutubxonalarsiz). |
+| [`make_images.py`](make_images.py) + [`pnglib.py`](pnglib.py) | Har bir slayd uchun mavzuga mos rasmni (`assets/slideNN.png`) lokal chizadi (gradient fon, tola kesimi, TIR nur diagrammasi, mis↔tola grafigi, global xarita, kabel yotqizuvchi kema, Yer shari tarmog'i va h.k.). |
+| [`verify_pptx.py`](verify_pptx.py) | `.pptx` ni tekshiradi: 10 ta slayd, har birida kamida 1 ta embed rasm, XML to'g'riligi. |
+
+### `.pptx` ni qayta yaratish
+
+```bash
+python3 build_pptx.py
+```
+
+> **Eslatma:** Rasmlar Unsplash havolalari o'rniga lokal chiziladi, chunki `.pptx` formati rasm baytlarini ichiga embed qiladi (URL'ni yuklamaydi) va build muhitida tashqi internet mavjud emas edi. Shu bois har bir slaydning o'ziga xos, mavzuga mos rasmi `make_images.py` orqali generatsiya qilinib, faylga joylangan.
 
 ## Tuzilma (4 qism, 10 slayd)
 
